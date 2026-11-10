@@ -12,7 +12,7 @@
 
 export const site = {
   /** Change this to your real domain once deployed (used for SEO and Open Graph). */
-  url: 'https://habeebmufutau.vercel.app',
+  url: 'https://myportfolio-lyart-three-70.vercel.app',
   title: 'Habeeb Mufutau | Python Backend Engineer',
   description:
     'Python backend engineer in Leeds, UK. Django, DRF, PostgreSQL, MySQL, AWS and Docker. I built and run a production platform used by 9,500+ people.',
