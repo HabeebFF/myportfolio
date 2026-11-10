@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Mirrors tailwind.config.ts so canvas code and plain CSS can use the palette. */
+:root {
+  --bg: #0a0b0d;
+  --panel: #121418;
+  --line: #24272e;
+  --fg: #ededE6;
+  --muted: #9ba0a8;
+  --accent: #c6ff3d;
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+/* Lenis smooth scroll takes over scrolling when it is active. */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* Clear, high contrast focus ring for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hide the native cursor only when the custom cursor is running (fine pointers). */
+html.has-custom-cursor,
+html.has-custom-cursor a,
+html.has-custom-cursor button { cursor: none; }
+html.has-custom-cursor input,
+html.has-custom-cursor textarea { cursor: text; }
+
+@layer components {
+  .container-site { @apply mx-auto w-full max-w-site px-5 sm:px-8; }
+  .section { @apply relative py-24 sm:py-32; }
+  .eyebrow { @apply font-mono text-xs uppercase tracking-[0.2em] text-accent; }
+  .h-section { @apply font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl; }
+  .chip { @apply inline-flex items-center rounded-full border border-line bg-panel px-3 py-1 font-mono text-xs text-muted; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-mono text-sm font-medium transition-colors;
+  }
+  .btn-primary { @apply btn bg-accent text-bg hover:bg-fg; }
+  .btn-ghost { @apply btn border border-line text-fg hover:border-accent hover:text-accent; }
+}
+
+/* Subtle film grain over the page for the cinematic feel. Pure CSS, no image request. */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Ruled notebook paper used for the early part of the timeline. */
+.paper {
+  background-color: #15161a;
+  background-image:
+    linear-gradient(90deg, transparent 2.25rem, rgba(255, 92, 92, 0.25) 2.25rem, rgba(255, 92, 92, 0.25) calc(2.25rem + 1px), transparent calc(2.25rem + 1px)),
+    repeating-linear-gradient(180deg, transparent 0, transparent 1.6rem, rgba(237, 237, 230, 0.07) 1.6rem, rgba(237, 237, 230, 0.07) calc(1.6rem + 1px));
+}
+/* Terminal style dot grid for the later part of the timeline. */
+.grid-dots {
+  background-color: var(--panel);
+  background-image: radial-gradient(rgba(198, 255, 61, 0.09) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+/* Blinking caret used by the hero and console. */
+.caret { display: inline-block; width: 0.55em; height: 1.1em; background: var(--accent); vertical-align: text-bottom; }
+@media (prefers-reduced-motion: no-preference) {
+  .caret { animation: blink 1.05s steps(1) infinite; }
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Flowing dashes on architecture diagram edges. */
+@media (prefers-reduced-motion: no-preference) {
+  .flow { animation: flow 1.6s linear infinite; }
+}
+@keyframes flow { to { stroke-dashoffset: -24; } }
+
+/* Thin scrollbar inside the console and modal. */
+.thin-scroll { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
